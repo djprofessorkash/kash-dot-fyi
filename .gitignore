@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # frozen dependency states
 package-lock.json
+
+# extensions to VSCode
+.vscode/
