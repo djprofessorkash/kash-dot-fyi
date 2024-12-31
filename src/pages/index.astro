@@ -1,11 +1,30 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-	<Welcome />
+	<div id="home"  class="w-full md:-mb-10" >
+		<section id="home-page"  class="bg-jour dark:bg-nuit text-nuit dark:text-jour m-5 md:flex md:flex-row md:justify-between md:items-center" >
+			<div id="left"  class="max-w-96" >
+
+				<!--  -->
+				<h1 class="font-black text-3xl font-syne">My name is Aakash Sudhakar.</h1>
+				<br />
+
+				<h2>But you can call me <b>Kash</b>.</h2>
+
+				<p  class="mt-5 pb-4 md:pb-0 text-sm font-code font-light text-balance tracking-tighter" >
+					In my professional career, I bring together technology, mathematics, 
+					gamification, and the natural sciences to create beautiful explorations
+					and disseminations of the artificial and natural worlds. 
+					<br /><br />
+					Through years of teaching expertise, I aim to empower generations 
+					to build beautiful things and invent a better future.
+					<br /><br />
+					In my personal journey, I diversify my interests across domains that span 
+					STEM, artistry, communication, and human expression. 
+				</p>
+			</div>
+		</section>
+	</div>
 </Layout>
