@@ -147,3 +147,32 @@ console.log(currentPath);
         </div>
     </nav>
 </div>
+
+<script is:inline>
+	// Access Burger Menu Elements from DOM
+	const elementBurger = document.querySelector(".navbar-burger");
+	const elementMenu = document.querySelector(".navbar-menu");
+
+    // Access Burger Menu Exit Icon and Opened Region (Menu Links Must Not Be Hidden)
+    const elementMenuCloseButton = document.querySelector(".navbar-close");
+    const elementMenuBackdrop = document.querySelector(".navbar-backdrop");
+
+    const closeMenu = () => {
+        elementMenu.classList.toggle("hidden");
+    };
+
+	// Open Burger Menu on Burger Icon Click
+	elementBurger.addEventListener("click", () => {
+        closeMenu();
+    });
+
+    // Close Burger Menu on Exit Icon Click
+	elementMenuCloseButton.addEventListener("click", () => {
+        closeMenu();
+    });
+
+	// Close Burger Menu on Mouse-Click Outside of Opened Menu Region
+	elementMenuBackdrop.addEventListener("click", () => {
+        closeMenu();
+    });
+</script>
