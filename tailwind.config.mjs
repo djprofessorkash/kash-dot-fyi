@@ -16,7 +16,29 @@ export default {
 			},
 			width: {
 				"calc-100-minus-2rem": "calc(100% - 2rem)",
-			  },
+			},
+			keyframes: {
+				typing: {
+					"0%": {
+						width: "0%",
+						visibility: "hidden"
+					},
+					"100%": {
+						width: "150%"
+					}  
+				},
+				blink: {
+					"50%": {
+						borderColor: "transparent"
+					},
+					"100%": {
+						borderColor: "white"
+					}  
+				}
+			},
+			animation: {
+				typing: "typing 2s steps(30), blink .9s infinite"
+			}
 		},
 	},
 	plugins: [],
