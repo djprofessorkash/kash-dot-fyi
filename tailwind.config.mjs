@@ -10,9 +10,9 @@ export default {
 				syne: ["Syne", "serif"]
 			},
 			colors: {
-				nuit: "#1A1A1A",
-				accent: "#D62828",
-				jour: "#FFFFFF"
+				silver: "#3C454D",
+				gold: "#D9BE4C",
+				pearl: "#FFFFFF"
 			},
 			width: {
 				"calc-100-minus-2rem": "calc(100% - 2rem)",
