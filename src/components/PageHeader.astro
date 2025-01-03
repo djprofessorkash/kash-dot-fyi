@@ -1,0 +1,147 @@
+---
+const currentPath = new URL(Astro.request.url).pathname;
+console.log(currentPath);
+---
+
+<!-- Container for Nav-Bar Header (Rendered on Large Windows by Default) -->
+<nav id="headerNavBar" class="nav relative px-4 py-4 flex justify-between items-center bg-pearl dark:bg-silver">
+
+    <!-- Clickable Logo on Header that Routes Back to Home Page -->
+    <a class="text-3xl font-bold leading-none" href="/" title="Back to Home">
+        <div class="w-[63px] h-[61px]">
+            <img src="images/kickboxing-logo.jpg" alt="Kickboxer's Logo" class="bg-pearl invert-0 dark:invert p-2 rounded-sm" />
+        </div>
+    </a>
+
+    <!-- Burger Menu Icon in Upper Right Corner (Hidden By Default on Regular/Large Window Size) -->
+    <div class="lg:hidden">
+        <button class="navbar-burger flex items-center text-silver dark:text-pearl p-3" >
+            <svg class="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <title>Navigational Menu</title>
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Page Routing Options (Rendered as Options Accessible via Nav-Bar; Shown by Default) -->
+    <ul class="hidden absolute top-[64px] left-[100px] transform -translate-y-1/2 lg:flex lg:mx-auto lg:items-center lg:justify-start lg:w-auto lg:space-x-2 font-code">
+        <!-- Nav-Bar Routing Option: Home -->
+        <li>
+            <a class=`${(currentPath==="/") && "navIsActive"} hover:text-gold` id="homePage" href="/">home</a>
+        </li>
+        <li class="text-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+            </svg>
+        </li>
+
+        <!-- Nav-Bar Routing Option: About Me -->
+        <li>
+            <a class=`${(currentPath==="/about-me/") && "navIsActive"} hover:text-gold` id="aboutPage" href="/about-me/">about me</a>
+        </li>
+        <li class="text-gray-300">
+            <svg class="w-4 h-4 current-fill" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+            </svg>
+        </li>
+
+        <!-- Nav-Bar Routing Option: Technical Projects -->
+        <li>
+            <a class=`${(currentPath==="/projects/") && "navIsActive"} hover:text-gold` id="projectsPage" href="/projects/">projects</a>
+        </li>
+        <li class="text-gray-300">
+            <svg class="w-4 h-4 current-fill" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+            </svg>
+        </li>
+
+        <!-- Nav-Bar Routing Option: Teaching Experience -->
+        <li>
+            <a class=`${(currentPath==="/teaching/") && "navIsActive"} hover:text-gold` id="teachingPage" href="/teaching/">teaching</a>
+        </li>
+        <li class="text-gray-300">
+            <svg class="w-4 h-4 current-fill" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+            </svg>
+        </li>
+
+        <!-- Nav-Bar Routing Option: Research Involvement -->
+        <li>
+            <a class=`${(currentPath==="/research/") && "navIsActive"} hover:text-gold` id="researchPage" href="/research/">research</a>
+        </li>
+        <li class="text-gray-300">
+            <svg class="w-4 h-4 current-fill" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+            </svg>
+        </li>
+
+        <!-- Nav-Bar Routing Option: Hobbies & Interests -->
+        <li>
+            <a class=`${(currentPath==="/interests/") && "navIsActive"} hover:text-gold` id="interestsPage" href="/interests/">interests</a>
+        </li>
+    </ul>
+</nav>
+
+<!-- Container for Expandible Burger Menu with Header Contents (Burger Icon Hidden and Collapsed by Default) -->
+<div id="containerNavBarBurgerMenu" class="nav navbar-menu relative z-50 hidden">
+    <div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
+    <nav id="headerBurgerMenuOnAppear" class="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-black overflow-y-auto">
+        <div class="flex items-center mb-8">
+            <!-- Imposed Logo in Corner of Expanded Burger Menu -->
+            <a class="mr-auto text-3xl font-bold leading-none" href="/">
+                <div class="w-[63px] h-[61px]">
+                    <img src="../../images/kickboxing-logo.jpg" alt="" class="p-0 rounded-sm invert "/>
+                </div>
+            </a>
+
+            <!-- Burger Menu Close Button -->
+            <button class="navbar-close">
+                <svg class="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Expanded Listed Routes in Burger Menu -->
+        <div class="font-code text-2xl text-pearl">
+            <ul>
+                <!-- Burger Routing Option: Home -->
+                <li class="mb-1">
+                    <a class=`${(currentPath==="/") && "navIsActiveMobile"} block p-4 font-semibold hover:bg-gray-50 hover:text-gold` href="/">home.</a>
+                </li>
+
+                <!-- Burger Routing Option: About Me -->
+                <li class="mb-1">
+                    <a class=`${(currentPath==="/about-me/") && "navIsActiveMobile"} block p-4 font-semibold hover:bg-gray-50 hover:text-gold` href="/about-me/">about me.</a>
+                </li>
+
+                <!-- Burger Routing Option: Technical Projects -->
+                <li class="mb-1">
+                    <a class=`${(currentPath==="/projects/") && "navIsActiveMobile"} block p-4 font-semibold hover:bg-gray-50 hover:text-gold` href="/projects/">projects.</a>
+                </li>
+
+                <!-- Burger Routing Option: Teaching Experience -->
+                <li class="mb-1">
+                    <a class=`${(currentPath==="/teaching/") && "navIsActiveMobile"} block p-4 font-semibold hover:bg-gray-50 hover:text-gold` href="/teaching/">teaching.</a>
+                </li>
+
+                <!-- Burger Routing Option: Research Involvement -->
+                <li class="mb-1">
+                    <a class=`${(currentPath==="/research/") && "navIsActiveMobile"} block p-4 font-semibold hover:bg-gray-50 hover:text-gold` href="/research/">research.</a>
+                </li>
+
+                <!-- Burger Routing Option: Hobbies & Interests -->
+                <li class="mb-1">
+                    <a class=`${(currentPath==="/interests/") && "navIsActiveMobile"} block p-4 font-semibold hover:bg-gray-50 hover:text-gold` href="/interests/">interests.</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="mt-auto">
+            <div class="pt-6"></div>
+            <p class="my-4 text-xs text-center text-pearl">
+                <span>Made with love. 💛</span>
+            </p>
+        </div>
+    </nav>
+</div>
