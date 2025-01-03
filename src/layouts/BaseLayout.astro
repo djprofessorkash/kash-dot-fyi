@@ -66,3 +66,41 @@ const pageUrl = `https://kash.fyi${Astro.url.pathname}`;
 
     </body>
 </html>
+
+<script is:inline>
+	document.addEventListener("scroll", function () {});
+
+    gsap.registerPlugin(
+        Flip,
+        ScrollTrigger,
+        ScrollToPlugin
+    );
+
+    const lenis = new Lenis();
+
+    const __animFrameRequestHelper = (time) => {
+        lenis.raf(time);
+        requestAnimationFrame(__animFrameRequestHelper);
+    }
+
+    requestAnimationFrame(__animFrameRequestHelper);
+
+    console.log(
+        "%cD J    P R O F E S S O R    K A S H",
+        "background-color: black;color: white; font-size: 16px; font-weight: bold; padding:5px 25px; margin-top:20px"
+    );
+
+    const backToTopButton = document.getElementById("backToTop");
+
+    backToTopButton.style.display = "none";
+
+    window.addEventListener("scroll", () => {
+        const scrollThreshold = window.innerHeight * 0.5;
+        if (window.scrollY > scrollThreshold) {
+            // Show after scrolling 100px
+            backToTopButton.style.display = "block"; // Make it visible
+        } else {
+            backToTopButton.style.display = "none"; // Hide it
+        }
+    });
+</script>
