@@ -22,6 +22,20 @@
       canvas.style.height = "100%";
       canvas.style.pointerEvents = "none"; // Prevent blocking interactions
       document.body.appendChild(canvas);
+
+      // Add a reference for the central star effect
+      const starElement = document.createElement('div');
+      starElement.style.position = 'fixed';
+      starElement.style.top = '0';
+      starElement.style.left = '0';
+      starElement.style.width = '100%';
+      starElement.style.height = '100%';
+      starElement.style.pointerEvents = 'none';
+      starElement.style.zIndex = '-1'; // Keep it behind everything
+      starElement.style.background = 'radial-gradient(circle at 50% 50%, white 0%, rgba(211, 211, 211, 0.7) 50%, transparent 100%)';
+      starElement.style.opacity = '0'; // Start hidden
+      starElement.style.transition = 'opacity 0.5s ease';
+      document.body.appendChild(starElement);
   
       const particles = [];
       const particleCount = (Math.random() + 0.75) * 150;
@@ -69,10 +83,10 @@
 
             // Update tracer path
             this.tracerPath.push({ x: this.x, y: this.y });
-            if (this.tracerPath.length > 15) this.tracerPath.shift(); // Limit tracer length
+            if (this.tracerPath.length > 5) this.tracerPath.shift(); // Limit tracer length
 
             // Grow particle size for orbiting mode
-            this.sizeTarget = Math.min(3, distance / 200); // Larger "planet-like" size inversely proportional to proximity to centroid
+            this.sizeTarget = Math.min(7.5, distance / 75); // Larger "planet-like" size inversely proportional to proximity to centroid
           } else {
             // Random movement behavior
             this.x += this.vx;
@@ -226,6 +240,9 @@
             particle.orbitSpeed = Math.max(0.5, 200 / distance) * 0.02;
             particle.orbitAngle = Math.atan2(dy, dx);
           });
+          starElement.style.opacity = "1";
+        } else {
+          starElement.style.opacity = "0";
         }
       });
   
