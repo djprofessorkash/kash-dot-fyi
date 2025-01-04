@@ -5,3 +5,11 @@
 html, body {
     overflow-x: hidden;
 }
+
+#btnGitHub {
+    @apply w-10 h-10 flex items-center justify-center opacity-90 hover:opacity-100 bg-white rounded-full text-gray-800 transition-all duration-300 hover:text-white hover:bg-black shadow-md;
+}
+
+#btnLinkedIn {
+    @apply w-10 h-10 flex items-center justify-center opacity-90 hover:opacity-100 bg-white rounded-full text-blue-500 transition-all duration-300 hover:text-white hover:bg-blue-500 shadow-md;
+}
