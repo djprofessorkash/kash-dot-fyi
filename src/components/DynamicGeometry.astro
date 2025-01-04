@@ -1,0 +1,234 @@
+<canvas id="visualization" class="fixed top-0 left-0 w-full h-full z-10 pointer-events-none"></canvas>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const canvas = document.getElementById("visualization");
+      const ctx = canvas.getContext("2d");
+      const buttonTogglePhysics = document.getElementById("togglePhysicsBtn")
+  
+      // Adjust canvas size
+      const resizeCanvas = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      };
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+  
+      // Enable mouse interaction while preserving pointer-events for other elements
+      canvas.style.position = "fixed";
+      canvas.style.top = "0";
+      canvas.style.left = "0";
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      canvas.style.pointerEvents = "none"; // Prevent blocking interactions
+      document.body.appendChild(canvas);
+  
+      const particles = [];
+      const particleCount = (Math.random() + 0.75) * 150;
+      const connectionDistance = 120;
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+
+      let isOrbiting = false; // Toggle state for particle behavior
+  
+      // Cursor particle
+      const cursor = { x: -100, y: -100 };
+  
+      // Particle class
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.vx = (Math.random() - 0.5) * 1.5;
+          this.vy = (Math.random() - 0.5) * 1.5;
+          this.size = 0.35;
+          this.sizeTarget = this.size; // Target size for smooth transitions
+          this.tracerPath = []; // Store recent positions for circular tracers
+          this.orbitSpeed = 0; // Speed of orbiting
+          this.orbitAngle = 0; // Current angle of orbiting
+          this.reverseTransition = 0; // Smooth reversal factor (0: current, 1: reversed)
+        }
+  
+        update() {
+          if (isOrbiting) {
+            // Calculate orbit velocity based on distance from center
+            const dx = this.x - centerX;
+            const dy = this.y - centerY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            // Interpolate speed for reversing direction
+            const angleChange = (1 - this.reverseTransition) * this.orbitSpeed + this.reverseTransition * -this.orbitSpeed;
+
+            this.orbitAngle += angleChange;
+
+            this.x = centerX + distance * Math.cos(this.orbitAngle);
+            this.y = centerY + distance * Math.sin(this.orbitAngle);
+
+            // Gradually reset the reverse transition factor
+            this.reverseTransition *= 0.9;
+
+            // Update tracer path
+            this.tracerPath.push({ x: this.x, y: this.y });
+            if (this.tracerPath.length > 15) this.tracerPath.shift(); // Limit tracer length
+
+            // Grow particle size for orbiting mode
+            this.sizeTarget = Math.min(3, distance / 200); // Larger "planet-like" size inversely proportional to proximity to centroid
+          } else {
+            // Random movement behavior
+            this.x += this.vx;
+            this.y += this.vy;
+    
+            if (this.x <= 0 || this.x >= canvas.width) this.vx *= -1;
+            if (this.y <= 0 || this.y >= canvas.height) this.vy *= -1;
+
+            // Shrink particle size for random mode
+            this.sizeTarget = 0.35;
+          }
+          // Smoothly transition size
+          this.size += (this.sizeTarget - this.size) * 0.1;
+
+          // Update position
+          this.x += this.vx;
+          this.y += this.vy;
+        }
+  
+        draw() {
+          if (isOrbiting) {
+            // Draw circular tracers
+            for (let i = 0; i < this.tracerPath.length - 1; i++) {
+              const opacity = (i + 1) / this.tracerPath.length;
+              ctx.beginPath();
+              ctx.moveTo(this.tracerPath[i].x, this.tracerPath[i].y);
+              ctx.lineTo(this.tracerPath[i + 1].x, this.tracerPath[i + 1].y);
+              ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+              ctx.lineWidth = 1;
+              ctx.stroke();
+              ctx.closePath();
+            }
+          }
+
+          // Draw particle
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = "white";
+          ctx.fill();
+          ctx.closePath();
+        }
+      }
+  
+      // Initialize particles
+      for (let i = 0; i < particleCount; i++) {
+        const particle = new Particle();
+
+        // Assign initial orbit speed and angle
+        const dx = particle.x - centerX;
+        const dy = particle.y - centerY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        particle.orbitSpeed = Math.max(0.5, 150 / distance) * 0.01675; // Faster near center
+        particle.orbitAngle = Math.atan2(dy, dx);
+
+        particles.push(particle);
+      }
+  
+      // Mousemove: Update cursor position
+      document.addEventListener("mousemove", (event) => {
+        // Detect mouse movement only if inside the canvas
+        const rect = canvas.getBoundingClientRect();
+        cursor.x = event.clientX - rect.left;
+        cursor.y = event.clientY - rect.top;
+      });
+  
+      // Mousedown: Trigger particle propulsion
+      document.addEventListener("mousedown", (event) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+  
+        particles.forEach((particle) => {
+          const dx = particle.x - x;
+          const dy = particle.y - y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+  
+          if (distance < connectionDistance) {
+            if (isOrbiting) {
+              // Initiate smooth reversal for particles within range
+              particle.reverseTransition = 1;
+            } else {
+              const angle = Math.atan2(dy, dx);
+              particle.vx = Math.cos(angle) * 1.5;
+              particle.vy = Math.sin(angle) * 1.5;
+            }
+          }
+        });
+      });
+  
+      const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+        if (!isOrbiting) {
+          for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const dx = particles[i].x - particles[j].x;
+              const dy = particles[i].y - particles[j].y;
+              const distance = Math.sqrt(dx * dx + dy * dy);
+    
+              if (distance < connectionDistance) {
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / connectionDistance})`;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+                ctx.closePath();
+              }
+            }
+          }
+        }
+  
+        // Draw connections to the cursor
+        particles.forEach((particle) => {
+          const dx = particle.x - cursor.x;
+          const dy = particle.y - cursor.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+  
+          if (distance < connectionDistance) {
+            ctx.beginPath();
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(cursor.x, cursor.y);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / connectionDistance})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+            ctx.closePath();
+          }
+        });
+  
+        particles.forEach((particle) => {
+          particle.update();
+          particle.draw();
+        });
+  
+        requestAnimationFrame(animate);
+      };
+
+      // Toggle orbiting behavior
+      buttonTogglePhysics.addEventListener("click", () => {
+        isOrbiting = !isOrbiting;
+
+        if (isOrbiting) {
+          particles.forEach((particle) => {
+            // Recalculate velocity based on current position
+            const dx = particle.x - centerX;
+            const dy = particle.y - centerY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            // Recalculate orbit properties
+            particle.orbitSpeed = Math.max(0.5, 200 / distance) * 0.02;
+            particle.orbitAngle = Math.atan2(dy, dx);
+          });
+        }
+      });
+  
+      animate();
+    });
+  </script>
