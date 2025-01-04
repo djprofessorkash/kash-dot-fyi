@@ -10,6 +10,7 @@ export default {
 				syne: ["Syne", "serif"]
 			},
 			colors: {
+				bronze: "#B8860B",
 				silver: "#3C454D",
 				gold: "#D9BE4C",
 				pearl: "#FFFFFF"
