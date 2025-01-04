@@ -59,11 +59,17 @@
         update() {
           if (this.isOrbiting) {
             // Update orbiting position
-            const radius = Math.hypot(this.x - this.orbitCenter.x, this.y - this.orbitCenter.y);
-            this.orbitAngle += this.orbitSpeed * this.orbitDirection;
+            const currentRadius = Math.hypot(this.x - this.orbitCenter.x, this.y - this.orbitCenter.y);
+            const targetRadius = currentRadius; // The particle's current orbital level
 
-            this.x = this.orbitCenter.x + radius * Math.cos(this.orbitAngle);
-            this.y = this.orbitCenter.y + radius * Math.sin(this.orbitAngle);
+            // Introduce damping to stabilize orbital level changes
+            const dampingFactor = 0.9; // Closer to 1 means more resistance to change
+            const adjustedRadius = currentRadius + (targetRadius - currentRadius) * (1 - dampingFactor);
+
+            // Update orbiting position and direction
+            this.orbitAngle += this.orbitSpeed * this.orbitDirection;
+            this.x = this.orbitCenter.x + adjustedRadius * Math.cos(this.orbitAngle);
+            this.y = this.orbitCenter.y + adjustedRadius * Math.sin(this.orbitAngle);
 
             this.orbitCenter = { x: centerX, y: centerY }; // Sync orbit center to the star
 
