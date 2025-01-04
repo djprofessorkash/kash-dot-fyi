@@ -24,7 +24,7 @@ const pageUrl = `https://kash.fyi${Astro.url.pathname}`;
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <!-- Setting Web Page Title -->
-        <title>{title}</title>
+        <title>DJ Professor Kash</title>
 
         <!-- Configure Page Metadata -->
         <meta property="og:type" content={type} />
@@ -51,8 +51,9 @@ const pageUrl = `https://kash.fyi${Astro.url.pathname}`;
     </head>
 
     <body class="top bg-pearl dark:bg-silver text-silver dark:text-pearl w-full font-poppins overflow-y-scroll overflow-x-hidden relative">
-        <!-- Clickable Icon in Bottom Right to Link Back to Top of Web Page -->
-        <div id="backToTop" class="text-3xl md:text-4xl fixed right-1 bottom-2 md:bottom-5 md:right-5 z-50 active:animate-ping">
+        <!-- Clickable Icon in Bottom Middle to Link Back to Top of Web Page -->
+        <!-- TODO: Properly Center Icon (Currently Bugged at Far Left) -->
+        <div id="backToTop" class="text-3xl md:text-4xl fixed center-1 bottom-2 md:bottom-5 md:center-5 z-50 active:animate-ping">
             <a href="#top">
                 <i class="fa-solid fa-circle-arrow-up text-silver dark:text-white hover:text-gold"></i>
             </a>
