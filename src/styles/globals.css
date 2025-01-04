@@ -17,3 +17,62 @@ html, body {
 #btnResume {
     @apply w-10 h-10 flex items-center justify-center opacity-90 hover:opacity-100 bg-white rounded-full text-blue-900 transition-all duration-300 hover:text-white hover:bg-blue-900 shadow-md;
 }
+
+@layer utilities {
+    /* Glitch animation for white letters */
+    @keyframes glitch {
+      0%, 100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+      10% {
+        transform: translate(-2px, -2px);
+        content: "3";
+      }
+      20% {
+        transform: translate(2px, 2px);
+        content: "Z";
+      }
+      30% {
+        transform: translate(-1px, 1px);
+        content: "4";
+      }
+      40% {
+        content: "M";
+      }
+      50% {
+        content: attr(data-glitch);
+      }
+    }
+
+    /* Fade-out animation for white text */
+    @keyframes fade-out {
+      to {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+    }
+
+    /* Fade-in animation to reverse the effect */
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Utility classes */
+    .glitch {
+      animation: glitch 0.5s steps(2) infinite;
+    }
+    .fade-out {
+      animation: fade-out 0.3s forwards;
+    }
+    .fade-in {
+      animation: fade-in 0.3s forwards;
+    }
+  }

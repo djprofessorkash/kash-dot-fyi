@@ -5,24 +5,30 @@ import DynamicGeometry from "../components/DynamicGeometry.astro";
 
 <BaseLayout>
 	<div id="home" class="w-full md:-mb-10" >
-		<section id="home-page" class="bg-pearl dark:bg-silver text-silver dark:text-pearl m-5 md:flex md:flex-row md:justify-between md:items-center" >
+		<section id="home-page" class="bg-pearl dark:bg-silver text-silver dark:text-pearl m-5 flex flex-col items-center justify-center space-y-6">
 			<DynamicGeometry />
 
 			<div class="h-screen text-white flex flex-col items-center justify-center space-y-6">
 				<!-- Title -->
-				<h1 class="text-5xl font-bold text-center md:text-7xl lg:text-8xl relative z-20">
-					<span class="text-pearl">AA<span class="text-gold">KASH</span><br />SUDHAKAR</span>
+				<h1 id="glitch-title" class="text-5xl font-bold text-center md:text-7xl lg:text-8xl relative z-20 max-w-2xl">
+					<span id="outerKashText" class="text-pearl">
+						<span class="glitch-char white-char" data-type="static">AA</span>
+						<span id="innerKashText" class="text-gold glitch-char" data-type="gold">KASH</span>
+						<br />
+						<span class="glitch-char white-char" data-type="static">SUDHAKAR</span>
+					</span>
 				</h1>
+
 				<!-- Buttons -->
 				<div class="flex space-x-4 relative z-20">
 					<a id="directLinkToProjects" href="/projects/">
 						<button id="allProjects" class="px-3 py-2 text-lg font-semibold bg-pearl text-silver rounded-lg hover:bg-gold hover:text-pearl transition">
-						Projects
+							Projects
 						</button>
 					</a>
 					<a id="directLinkToCourses" href="/teaching/">
 						<button id="allCourses" class="px-3 py-2 text-lg font-semibold bg-pearl text-silver rounded-lg hover:bg-gold hover:text-pearl transition">
-						Courses
+							Courses
 						</button>
 					</a>
 				</div>
@@ -30,3 +36,57 @@ import DynamicGeometry from "../components/DynamicGeometry.astro";
 		</section>
 	</div>
 </BaseLayout>
+
+<script>
+	const title = document.getElementById("glitch-title");
+	const whiteChars = document.querySelectorAll(".white-char");
+	const innerKashText = document.getElementById("innerKashText");
+
+	let glitching = false; // To toggle the effect
+
+	const applyGlitchEffect = () => {
+		console.log("applying glitch effect");
+		if (glitching) return; // Prevent re-triggering
+    	glitching = true;
+
+		// Step 1: Glitch white letters
+		whiteChars.forEach((char, index) => {
+      		setTimeout(() => { char.classList.add("glitch"); }, index * 100); // Stagger effect
+    	});
+
+		// Step 2: Fade out white text
+		setTimeout(() => {
+			whiteChars.forEach((char) => {
+        		char.classList.remove("glitch");
+        		char.classList.add("fade-out");
+    		});
+    	}, 500);
+
+		// Step 3: Center "KASH"
+		setTimeout(() => { innerKashText.style.transform = "translateY(-50%)"; }, 800);
+	}
+
+	const reverseGlitchEffect = () => {
+		console.log("reversing glitch effect");
+		if (!glitching) return; // Prevent re-triggering
+    	glitching = false;
+
+		// Step 1: Fade in white text
+		whiteChars.forEach((char) => {
+			char.classList.remove("fade-out");
+			char.classList.add("fade-in");
+    	});
+
+		// Step 2: Restore positions
+		setTimeout(() => {
+    		innerKashText.style.transform = "translateY(0)";
+    	}, 300);
+
+		// Step 3: Remove fade-in class after animation
+		setTimeout(() => { whiteChars.forEach((char) => char.classList.remove("fade-in")); }, 600);
+	}
+
+	// Add hover listeners
+	title.addEventListener("mouseenter", applyGlitchEffect);
+	title.addEventListener("mouseleave", reverseGlitchEffect);
+</script>
