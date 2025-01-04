@@ -1,4 +1,4 @@
-<div id="togglePhysicsBtn" class="theme justify-start absolute z-10 right-14 lg:right-4 top-9 w-[42px] h-6 p-[3px] bg-white rounded-[14px] border border-black items-center gap-2.5 inline-flex">
+<div id="togglePhysicsBtn" class="theme justify-start absolute z-10 right-14 lg:right-4 top-9 w-[54px] h-6 p-[3px] bg-white rounded-[14px] border border-black items-center gap-2.5 inline-flex">
         <div class="circle w-[18px] h-[18px] bg-silver rounded-full shadow"></div>
 </div>
 
@@ -8,22 +8,39 @@
     const circle = document.querySelector(".circle");
     let inbetweeningState = false;
 
+    // Default state is `1: Fractals`
+    targetTheme.classList.add("fractals");
+
     const switchTheme = () => {
         if (inbetweeningState) return;
         inbetweeningState = true;
 
         const state = Flip.getState(circle);
 
-        if (targetTheme.classList.contains("stars")) {
-            targetTheme.classList.remove("stars");
-            localStorage.setItem("theme", "atoms");
+        if (targetTheme.classList.contains("cells")) {
+            // If clicked state is `3: Cells`, switch back to `1: Fractals`
+            targetTheme.classList.remove("cells");
+            targetTheme.classList.add("fractals");
+            localStorage.setItem("theme", "fractals");
+            // Move slider from third position back to first position
             toggleTheme.classList.remove("justify-end");
             toggleTheme.classList.add("justify-start");
-        } else {
-            targetTheme.classList.add("stars");
-            localStorage.setItem("theme", "stars");
-            toggleTheme.classList.remove("justify-start");
+        } else if (targetTheme.classList.contains("planets")) {
+            // If clicked state is `2: Planets`, switch to `3: Cells`
+            targetTheme.classList.remove("planets");
+            targetTheme.classList.add("cells");
+            localStorage.setItem("theme", "cells");
+            // Move slider from second position to third position
+            toggleTheme.classList.remove("justify-center");
             toggleTheme.classList.add("justify-end");
+        } else if (targetTheme.classList.contains("fractals")) {
+            // If clicked state is `1: Fractals`, switch to `2: Planets`
+            targetTheme.classList.remove("fractals");
+            targetTheme.classList.add("planets");
+            localStorage.setItem("theme", "planets");
+            // Move slider from first position to second position
+            toggleTheme.classList.remove("justify-start");
+            toggleTheme.classList.add("justify-center");
         }
 
         Flip.from(state, {
