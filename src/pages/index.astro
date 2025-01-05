@@ -12,10 +12,10 @@ import DynamicGeometry from "../components/DynamicGeometry.astro";
 				<!-- Title -->
 				<h1 id="glitch-title" class="text-5xl font-bold text-center md:text-7xl lg:text-8xl relative z-20 max-w-2xl">
 					<span id="outerKashText" class="text-pearl">
-						<span class="glitch-char white-char" data-type="static">AA</span>
+						<span id="prefixGlitchedText" class="glitch-char white-char" data-type="static">AA</span>
 						<span id="innerKashText" class="text-gold glitch-char" data-type="gold">KASH</span>
 						<br />
-						<span class="glitch-char white-char" data-type="static">SUDHAKAR</span>
+						<span id="suffixGlitchedText" class="glitch-char white-char" data-type="static">SUDHAKAR</span>
 					</span>
 				</h1>
 
@@ -40,53 +40,55 @@ import DynamicGeometry from "../components/DynamicGeometry.astro";
 <script>
 	const title = document.getElementById("glitch-title");
 	const whiteChars = document.querySelectorAll(".white-char");
+	const prefixGlitchedText = document.getElementById("prefixGlitchedText");
+	const suffixGlitchedText = document.getElementById("suffixGlitchedText");
 	const innerKashText = document.getElementById("innerKashText");
 
-	let glitching = false; // To toggle the effect
-
-	const applyGlitchEffect = () => {
-		console.log("applying glitch effect");
-		if (glitching) return; // Prevent re-triggering
-    	glitching = true;
-
+	const triggerGlitchEffect = () => {
 		// Step 1: Glitch white letters
+		// TODO: Currently broken.
 		whiteChars.forEach((char, index) => {
-      		setTimeout(() => { char.classList.add("glitch"); }, index * 100); // Stagger effect
-    	});
-
-		// Step 2: Fade out white text
+			setTimeout(() => { char.classList.add("glitch"); }, index * 100); // Stagger Effect?
+		});
+		// Step 2: Fade out white text – surname first, then prefix of first name
 		setTimeout(() => {
-			whiteChars.forEach((char) => {
-        		char.classList.remove("glitch");
-        		char.classList.add("fade-out");
-    		});
-    	}, 500);
-
-		// Step 3: Center "KASH"
-		setTimeout(() => { innerKashText.style.transform = "translateY(-50%)"; }, 800);
+			console.log("Triggering Glitch Effect!");
+			suffixGlitchedText.classList.remove("glitch");
+			suffixGlitchedText.classList.add("fade-out");
+		}, 400);
+		setTimeout(() => {
+			prefixGlitchedText.classList.remove("glitch");
+			prefixGlitchedText.classList.add("fade-out");
+		}, 800);
+		// Step 3: Center "KASH" on X-axis
+		setTimeout(() => {
+			const containerWidth = title.offsetWidth; // Full width of the title container
+			const kashWidth = innerKashText.offsetWidth; // Width of "KASH"
+			const offsetX = (containerWidth - kashWidth) / 4; // Calculate horizontal offset to center
+			// Apply X-transform to center "KASH"
+			title.style.transform = `translateX(-${offsetX}px)`;
+		}, 1050);
+		
+		// Step 4: Restore positions
+		setTimeout(() => {
+			console.log("Reversing Glitch Effect!");
+			// Reset transform to original position
+			title.style.transform = "translateX(0)";
+		}, 2800);
+		// Step 5: Fade in white text – first prefix of first name
+		setTimeout(() => {
+			prefixGlitchedText?.classList.remove("fade-out");
+			prefixGlitchedText?.classList.add("fade-in");
+		}, 2800);
+		setTimeout(() => {
+			suffixGlitchedText?.classList.remove("fade-out");
+			suffixGlitchedText?.classList.add("fade-in");
+		}, 3200);
+		// Step 6: Remove fade-in class after animation
+		setTimeout(() => { whiteChars.forEach((char) => char.classList.remove("fade-in")); }, 3450);
 	}
 
-	const reverseGlitchEffect = () => {
-		console.log("reversing glitch effect");
-		if (!glitching) return; // Prevent re-triggering
-    	glitching = false;
-
-		// Step 1: Fade in white text
-		whiteChars.forEach((char) => {
-			char.classList.remove("fade-out");
-			char.classList.add("fade-in");
-    	});
-
-		// Step 2: Restore positions
-		setTimeout(() => {
-    		innerKashText.style.transform = "translateY(0)";
-    	}, 300);
-
-		// Step 3: Remove fade-in class after animation
-		setTimeout(() => { whiteChars.forEach((char) => char.classList.remove("fade-in")); }, 600);
-	}
-
-	// Add hover listeners
-	title.addEventListener("mouseenter", applyGlitchEffect);
-	title.addEventListener("mouseleave", reverseGlitchEffect);
+	// Add hover listener
+	title.addEventListener("mouseenter", triggerGlitchEffect);
+	// }
 </script>
