@@ -17,22 +17,14 @@
 
         const state = Flip.getState(circle);
 
-        if (targetTheme.classList.contains("cells")) {
-            // If clicked state is `3: Cells`, switch back to `1: Fractals`
-            targetTheme.classList.remove("cells");
+        if (targetTheme.classList.contains("planets")) {
+            // If clicked state is `2: Planets`, switch back to `1: Fractals`
+            targetTheme.classList.remove("planets");
             targetTheme.classList.add("fractals");
             localStorage.setItem("theme", "fractals");
-            // Move slider from third position back to first position
+            // Move slider from second position back to first position
             toggleTheme.classList.remove("justify-end");
             toggleTheme.classList.add("justify-start");
-        } else if (targetTheme.classList.contains("planets")) {
-            // If clicked state is `2: Planets`, switch to `3: Cells`
-            targetTheme.classList.remove("planets");
-            targetTheme.classList.add("cells");
-            localStorage.setItem("theme", "cells");
-            // Move slider from second position to third position
-            toggleTheme.classList.remove("justify-center");
-            toggleTheme.classList.add("justify-end");
         } else if (targetTheme.classList.contains("fractals")) {
             // If clicked state is `1: Fractals`, switch to `2: Planets`
             targetTheme.classList.remove("fractals");
@@ -40,8 +32,35 @@
             localStorage.setItem("theme", "planets");
             // Move slider from first position to second position
             toggleTheme.classList.remove("justify-start");
-            toggleTheme.classList.add("justify-center");
+            toggleTheme.classList.add("justify-end");
         }
+
+        // TODO: Enable UI/UX for Ternary Switch.
+        // if (targetTheme.classList.contains("cells")) {
+        //     // If clicked state is `3: Cells`, switch back to `1: Fractals`
+        //     targetTheme.classList.remove("cells");
+        //     targetTheme.classList.add("fractals");
+        //     localStorage.setItem("theme", "fractals");
+        //     // Move slider from third position back to first position
+        //     toggleTheme.classList.remove("justify-end");
+        //     toggleTheme.classList.add("justify-start");
+        // } else if (targetTheme.classList.contains("planets")) {
+        //     // If clicked state is `2: Planets`, switch to `3: Cells`
+        //     targetTheme.classList.remove("planets");
+        //     targetTheme.classList.add("cells");
+        //     localStorage.setItem("theme", "cells");
+        //     // Move slider from second position to third position
+        //     toggleTheme.classList.remove("justify-center");
+        //     toggleTheme.classList.add("justify-end");
+        // } else if (targetTheme.classList.contains("fractals")) {
+        //     // If clicked state is `1: Fractals`, switch to `2: Planets`
+        //     targetTheme.classList.remove("fractals");
+        //     targetTheme.classList.add("planets");
+        //     localStorage.setItem("theme", "planets");
+        //     // Move slider from first position to second position
+        //     toggleTheme.classList.remove("justify-start");
+        //     toggleTheme.classList.add("justify-center");
+        // }
 
         Flip.from(state, {
             duration: 0.5,
