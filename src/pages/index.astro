@@ -90,11 +90,11 @@ import DynamicGeometry from "../components/DynamicGeometry.astro";
 		setTimeout(() => {
 			// suffixGlitchedText.classList.remove("glitch");
 			suffixGlitchedText.classList.add("fade-out");
-		}, 800);
+		}, 1400);
 		setTimeout(() => {
 			// prefixGlitchedText.classList.remove("glitch");
 			prefixGlitchedText.classList.add("fade-out");
-		}, 1200);
+		}, 1450);
 
 		// Step 3: Center "KASH" on X-axis
 		setTimeout(() => {
@@ -104,12 +104,18 @@ import DynamicGeometry from "../components/DynamicGeometry.astro";
 			// Apply X-transform to center "KASH"
 			title.style.transform = `translateX(-${offsetX}px)`;
 		}, 1500);
+
+		// Step 4: Change "KASH" to white
+		setTimeout(() => {
+			innerKashText.classList.add("gold-to-white");
+		}, 1550);
 		
-		// Step 4: Restore positions
+		// Step 5: Restore positions
 		setTimeout(() => {
 			// Reset transform to original position
 			title.style.transform = "translateX(0)";
 		}, 3200);
+
 		// Step 5: Fade in white text – first prefix of first name
 		setTimeout(() => {
 			prefixGlitchedText.classList.remove("fade-out");
@@ -120,8 +126,17 @@ import DynamicGeometry from "../components/DynamicGeometry.astro";
 			suffixGlitchedText.classList.add("fade-in");
 		}, 3600);
 
-		// Step 6: Remove fade-in class after animation
-		setTimeout(() => { whiteChars.forEach((char) => char.classList.remove("fade-in")); }, 3850);
+		// Step 7: Change "KASH" back to gold
+		setTimeout(() => {
+			innerKashText.classList.remove("gold-to-white");
+			innerKashText.classList.add("white-to-gold");
+		}, 3300);
+
+		// Step 8: Remove fade-in class after animation
+		setTimeout(() => { 
+			whiteChars.forEach((char) => char.classList.remove("fade-in")); 
+			innerKashText.classList.remove("white-to-gold"); // Ensure "KASH" remains gold
+		}, 3850);
 	}
 
 	// Add hover listener
