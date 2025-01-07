@@ -10,7 +10,7 @@ console.log(currentPath);
     <a class="text-3xl font-bold leading-none" href="/" title="Back to Home">
         <div class="relative w-[64px] h-[64px] duration-300 overflow-hidden">
             <!-- Static Background for Border -->
-            <div class="absolute inset-0 bg-pearl hover:bg-gold transition-colors duration-300"></div>
+            <div class="absolute inset-0 bg-pearl hover:bg-gold rounded-full transition-colors duration-300"></div>
             
             <!-- Logo Image with Fade Effect -->
             <div class="absolute inset-0 bg-no-repeat bg-left bg-cover transition-opacity duration-300 opacity-100 hover:opacity-0"
@@ -28,7 +28,7 @@ console.log(currentPath);
         <button id="togglePhysicsBtn" class="px-3 py-2 text-sm font-semibold bg-pearl text-silver rounded-full hover:bg-red-400 hover:text-pearl transition">
             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6h-2m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4"/>
-              </svg>													
+            </svg>													
         </button>
     </div> -->
 
@@ -85,14 +85,14 @@ console.log(currentPath);
         </li>
 
         <!-- Nav-Bar Routing Option: Research Involvement -->
-        <li>
+        <!-- <li>
             <a class=`${(currentPath==="/research/") && "navIsActive"} hover:text-gold` id="researchPage" href="/research/">research</a>
         </li>
         <li class="text-gray-300">
             <svg class="w-4 h-4 current-fill" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
             </svg>
-        </li>
+        </li> -->
 
         <!-- Nav-Bar Routing Option: Hobbies & Interests -->
         <li>
@@ -113,7 +113,7 @@ console.log(currentPath);
                     <div class="absolute inset-0 transition-colors duration-300"></div>
                     
                     <!-- Logo Image with Fade Effect -->
-                    <div class="absolute inset-0 bg-no-repeat bg-left bg-cover transition-opacity duration-300 opacity-100 hover:opacity-0"
+                    <div class="absolute inset-0 bg-no-repeat bg-left bg-cover rounded-full transition-opacity duration-300 opacity-100 hover:opacity-0"
                         style="background-image: url('https://github.com/djprofessorkash/kash-dot-fyi/blob/main/public/images/DJPKLogos_Pl&AuCombinedOnBl.png?raw=true'); background-size: 200%;">
                     </div>
 
@@ -155,9 +155,9 @@ console.log(currentPath);
                 </li>
 
                 <!-- Burger Routing Option: Research Involvement -->
-                <li class="mb-1">
+                <!-- <li class="mb-1">
                     <a class=`${(currentPath==="/research/") && "navIsActiveMobile"} block p-4 font-semibold hover:bg-gray-50 hover:text-gold` href="/research/">research</a>
-                </li>
+                </li> -->
 
                 <!-- Burger Routing Option: Hobbies & Interests -->
                 <li class="mb-1">
