@@ -6,6 +6,53 @@ html, body {
     overflow-x: hidden;
 }
 
+#prefixGlitchedText {
+    margin-right: -6px; /* Adjust this value to bring "AA" closer to "KASH" */
+}
+
+#innerKashText {
+    margin-left: -6px; /* Adjust this value to ensure "KASH" aligns better */
+    cursor: pointer; /* Change cursor to pointer for "KASH" */
+    transition: color 0.005s ease-in-out; /* Smooth transition for color change */
+}
+
+#innerKashText:hover {
+    @apply hover:animate-pulse;
+}
+
+.white-char {
+    cursor: default; /* Ensure default cursor for white text */
+}
+
+.gold-to-white {
+    color: #FFDF01 !important; /* Temporarily change "KASH" to white */
+}
+
+.white-to-gold {
+    color: #D9BE4C !important; /* Transition "KASH" back to gold */
+    animation: spin 1s;
+}
+
+@media (min-width: 767px) {
+    #prefixGlitchedText {
+        margin-right: -9px; /* Adjust for smaller screens */
+    }
+
+    #innerKashText {
+        margin-left: -9px;
+    }
+}
+
+@media (min-width: 1023px) {
+    #prefixGlitchedText {
+        margin-right: -12px; /* Adjust for smaller screens */
+    }
+
+    #innerKashText {
+        margin-left: -12px;
+    }
+}
+
 #btnGitHub {
     @apply w-10 h-10 flex items-center justify-center opacity-90 hover:opacity-100 bg-white rounded-full text-gray-800 transition-all duration-300 hover:text-white hover:bg-black shadow-md;
 }
@@ -70,9 +117,9 @@ html, body {
       animation: glitch 0.5s steps(2) infinite;
     }
     .fade-out {
-      animation: fade-out 0.3s forwards;
+      animation: fade-out 0.01s forwards;
     }
     .fade-in {
-      animation: fade-in 0.3s forwards;
+      animation: fade-in 0.4s forwards;
     }
   }
