@@ -13,6 +13,7 @@ export default {
 				bronze: "#B8860B",
 				silver: "#3C454D",
 				gold: "#D9BE4C",
+				aura: "#FFDF01",
 				pearl: "#FFFFFF"
 			},
 			width: {
