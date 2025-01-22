@@ -86,6 +86,13 @@ import DynamicGeometry from "../components/DynamicGeometry.astro";
 			});
 		});
 
+		const containerWidth = title.offsetWidth; // Full width of the title container
+		const containerHeight = title.offsetHeight; // Full height of the title container
+		const kashWidth = innerKashText.offsetWidth; // Width of "KASH"
+		const kashHeight = innerKashText.offsetHeight; // Height of "KASH"
+		const offsetX = (containerWidth - kashWidth) / 4; // Calculate horizontal offset to center
+		const offsetY = (containerHeight - kashHeight) / 4; // Calculate horizontal offset to center
+
 		// Step 2: Fade out white text – surname first, then prefix of first name
 		setTimeout(() => {
 			// suffixGlitchedText.classList.remove("glitch");
@@ -98,11 +105,9 @@ import DynamicGeometry from "../components/DynamicGeometry.astro";
 
 		// Step 3: Center "KASH" on X-axis
 		setTimeout(() => {
-			const containerWidth = title.offsetWidth; // Full width of the title container
-			const kashWidth = innerKashText.offsetWidth; // Width of "KASH"
-			const offsetX = (containerWidth - kashWidth) / 4; // Calculate horizontal offset to center
 			// Apply X-transform to center "KASH"
-			title.style.transform = `translateX(-${offsetX}px)`;
+			title.style.transform = `translate(-${offsetX}px, ${offsetY}px)`;
+			// title.style.transform = `translate()`;
 		}, 1500);
 
 		// Step 4: Change "KASH" to white
@@ -138,6 +143,8 @@ import DynamicGeometry from "../components/DynamicGeometry.astro";
 			innerKashText.classList.remove("white-to-gold"); // Ensure "KASH" remains gold
 		}, 3850);
 	}
+
+	triggerGlitchEffect()
 
 	// Add hover listener
 	innerKashText.addEventListener("click", triggerGlitchEffect);
