@@ -49,10 +49,12 @@ h1, h2, p {
     align-items: center;
     position: relative;
     overflow: hidden;
+    -webkit-overflow-scrolling: touch;
 }
 
 .carousel-track {
     display: flex;
+    gap: 16px; /* Add spacing between the cards */
     transition: transform 0.3s ease-in-out;
     will-change: transform;
 }
@@ -60,11 +62,21 @@ h1, h2, p {
 .carousel-item {
     width: 300px;
     height: 400px;
+    background-color: #d4af37; /* Dull gold */
     background-size: cover;
     background-position: center;
     position: relative;
     flex-shrink: 0;
     transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+    border-radius: 8px; /* Optional: Rounded corners */
+    overflow: hidden; /* Ensure child content stays inside the card */
+}
+
+/* Hover Effects */
+.carousel-item:hover {
+    cursor: pointer;
+    transform: scale(1.1); /* Expand card size */
+    z-index: 10; /* Bring hovered card to the foreground */
 }
 
 .carousel-content {
@@ -74,6 +86,61 @@ h1, h2, p {
     width: 100%;
     text-align: center;
     padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.carousel-item:hover .carousel-content {
+    opacity: 1;
+}
+
+/* Styling nav dots */
+.carousel {
+    padding-bottom: 60px;
+    position: relative;
+}
+.carousel__navdots {
+    bottom: 0;
+    column-gap: 16px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+.carousel__navdots button {
+    /* reset default style */
+    -moz-appearance: none;
+    -webkit-apperance: none;
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    /* style as a grey dot */
+    background-color: #9a9a9a; 
+    border-radius: 50%;
+    height: 10px;
+    padding: 0;
+    width: 10px;
+}
+.carousel__navdots button.is-active {
+    background-color: #0060a8; /* blue */
+}
+.carousel__navdots button:focus-visible {
+    outline: 2px solid #0060a8; /* blue */
+    outline-offset: 2px;
+}
+
+/* Stylistic purpose */
+.carousel-wrapper {
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    padding: 0 200px;
+}
+.carousel {
+    margin: 0 auto;
 }
 
 @media (min-width: 767px) {
